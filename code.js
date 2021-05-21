@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { selection } = figma.currentPage;
+const nodes = [];
 function getStyles() {
     return __awaiter(this, void 0, void 0, function* () {
         figma.root.children.flatMap((pageNode) => pageNode.selection.forEach((node) => __awaiter(this, void 0, void 0, function* () {
@@ -22,6 +23,9 @@ function getStyles() {
                 frame.bottomLeftRadius = node.bottomLeftRadius;
                 frame.bottomRightRadius = node.bottomRightRadius;
             }
+            if (node.type === "ELLIPSE") {
+                frame.cornerRadius = frame.width * 2;
+            }
             frame.fills = node.fills;
             frame.strokes = node.strokes;
             frame.strokeWeight = node.strokeWeight;
@@ -29,11 +33,11 @@ function getStyles() {
             frame.effects = node.effects;
             frame.x = node.x;
             frame.y = node.y;
+            nodes.push(frame);
             node.remove();
-            if (node.type === "ELLIPSE") {
-                frame.cornerRadius = frame.width * 2;
-            }
         })));
+        figma.currentPage.selection = nodes;
+        figma.viewport.scrollAndZoomIntoView(nodes);
         return Promise.resolve("Done!");
     });
 }

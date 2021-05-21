@@ -1,4 +1,5 @@
 const { selection } = figma.currentPage;
+const nodes: SceneNode[] = [];
 
 async function getStyles(): Promise<String> {
   figma.root.children.flatMap((pageNode) =>
@@ -13,6 +14,9 @@ async function getStyles(): Promise<String> {
         frame.bottomLeftRadius = node.bottomLeftRadius;
         frame.bottomRightRadius = node.bottomRightRadius;
       }
+      if (node.type === "ELLIPSE") {
+        frame.cornerRadius = frame.width * 2;
+      }
       frame.fills = node.fills;
       frame.strokes = node.strokes;
       frame.strokeWeight = node.strokeWeight;
@@ -20,12 +24,12 @@ async function getStyles(): Promise<String> {
       frame.effects = node.effects;
       frame.x = node.x;
       frame.y = node.y;
+      nodes.push(frame);
       node.remove();
-      if (node.type === "ELLIPSE") {
-        frame.cornerRadius = frame.width * 2;
-      }
     })
   );
+  figma.currentPage.selection = nodes;
+  figma.viewport.scrollAndZoomIntoView(nodes);
   return Promise.resolve("Done!");
 }
 
