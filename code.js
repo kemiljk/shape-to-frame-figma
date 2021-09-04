@@ -9,11 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const { selection } = figma.currentPage;
 const nodes = [];
-const nodetypes = ["RECTANGLE", "ELLIPSE"];
 function getStyles() {
     return __awaiter(this, void 0, void 0, function* () {
-        figma.root.children.flatMap((pageNode) => pageNode.selection.forEach((node) => __awaiter(this, void 0, void 0, function* () {
-            if (nodetypes.includes(node.type)) {
+        figma.currentPage.selection.forEach((node) => __awaiter(this, void 0, void 0, function* () {
+            if (node.type === "RECTANGLE" || node.type === "ELLIPSE") {
                 const frame = figma.createFrame();
                 frame.name = node.name;
                 if (node.cornerRadius !== figma.mixed) {
@@ -35,6 +34,11 @@ function getStyles() {
                 frame.effects = node.effects;
                 frame.x = node.x;
                 frame.y = node.y;
+                if (node.parent.type === "FRAME" || node.parent.type === "GROUP") {
+                    node.parent.insertChild(0, frame);
+                    frame.x = node.x;
+                    frame.y = node.y;
+                }
                 nodes.push(frame);
                 node.remove();
             }
@@ -50,7 +54,8 @@ function getStyles() {
                     shape.bottomLeftRadius = node.bottomLeftRadius;
                     shape.bottomRightRadius = node.bottomRightRadius;
                 }
-                if (node.cornerRadius >= node.width * 2) {
+                if (node.cornerRadius !== figma.mixed &&
+                    node.cornerRadius >= node.width * 2) {
                     shape.cornerRadius = shape.width * 2;
                 }
                 shape.fills = node.fills;
@@ -60,10 +65,15 @@ function getStyles() {
                 shape.effects = node.effects;
                 shape.x = node.x;
                 shape.y = node.y;
+                if (node.parent.type === "FRAME" || node.parent.type === "GROUP") {
+                    node.parent.insertChild(0, shape);
+                    shape.x = node.x;
+                    shape.y = node.y;
+                }
                 nodes.push(shape);
                 node.remove();
             }
-        })));
+        }));
         figma.currentPage.selection = nodes;
         figma.viewport.scrollAndZoomIntoView(nodes);
         return Promise.resolve("Done!");
