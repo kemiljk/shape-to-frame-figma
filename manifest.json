@@ -3,5 +3,10 @@
   "id": "952557548511056612",
   "api": "1.0.0",
   "main": "code.js",
-  "editorType": ["figma"]
+  "editorType": ["figma"],
+  "menu": [
+    { "name": "Shape to Frame", "command": "shape-to-frame" },
+    { "name": "Frame to Shape", "command": "frame-to-shape" },
+    { "name": "Shape to Auto Layout Frame", "command": "shape-to-al-frame" }
+  ]
 }
