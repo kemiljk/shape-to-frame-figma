@@ -1,5 +1,5 @@
 {
-  "name": "Shape››frame",
+  "name": "Node››frame",
   "id": "952557548511056612",
   "api": "1.0.0",
   "main": "code.js",
@@ -7,6 +7,7 @@
   "menu": [
     { "name": "Shape to Frame", "command": "shape-to-frame" },
     { "name": "Frame to Shape", "command": "frame-to-shape" },
+    { "name": "Group to Frame", "command": "group-to-frame" },
     { "name": "Shape to Auto Layout Frame", "command": "shape-to-al-frame" }
   ]
 }
