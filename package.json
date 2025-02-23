@@ -1,14 +1,13 @@
 {
-  "name": "NodeToFrame",
-  "version": "1.0.0",
-  "description": "Your Figma plugin",
-  "main": "code.js",
+  "name": "figma-shape-to-frame",
+  "module": "code.ts",
+  "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "bun build ./code.ts --outdir . --target browser",
+    "watch": "bun build ./code.ts --outdir . --target browser --watch"
   },
-  "author": "",
-  "license": "",
   "devDependencies": {
-    "@figma/plugin-typings": "^1.26.0"
+    "@figma/plugin-typings": "^1.107.0",
+    "bun-types": "latest"
   }
 }

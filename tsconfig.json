@@ -1,6 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "typeRoots": ["./node_modules/@figma"],
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   }
 }
